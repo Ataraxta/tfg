@@ -1,0 +1,82 @@
+\documentclass[10pt,spanish]{book}
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\SelectInputMappings{%
+  aacute={á},
+  eacute={é},
+  iacute={í},
+  oacute={ó},
+  uacute={ú},
+  ntilde={ñ},
+  Euro={€}
+}
+\usepackage{babel}
+%\setmainfont{???}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\linespread{1.25}
+\author{Jorge Angulo}
+\title{TFG Borrador}
+
+\begin{document}
+\maketitle
+\chapter{Introducción a semigrupos numéricos}
+Los semigrupos, en particular los semigrupos numéricos son uno de los conceptos fundamenteales de este trabajo y por ello, en este capítulo realizaremos una introducción de algunos de los conceptos más báscicos sobre semigrupos.\\
+
+\textbf{Definición 1:} Un semigrupo es un par $(S, +)$, donde $S$ es un conjunto y $\textbf{+}$ es una operación binaria y asociativa en $S$.\\ Además, en este trabajo consideraremos que, simpre que no se especifique lo contrario, dicha operación es conmutativa. En general denotaremos por $S$ a los semigrupos conmutativos (omitiendo también la operación en la notación)\\
+\\Este capítulo trata principalmente con los semigrupos numéricos. Es decir, semigrupos cuyos elementos son números naturales y donde la operación "$+$" es la suma habitual. \\ 
+\\ \textbf{Ejemplos:} 
+\begin{itemize}
+	\item Los números naturales con la suma habitual $(\mathbb{N}, +)$ son un semigrupo.
+	\item Dado $A\subset\mathbb{N}$, podemos definir un semigrupo $S=\{a+b\quad |\quad a, b\in A \}$ que denotaremos $<A>$. Por ejemplo, dado el conjunto $A=\{3,7\}$ obtenemos el semigrupo $S=\{3,6,7,9,10,12,13,14,16,17,...\}$. 
+	\item También podemos ver un ejemplo usando la librería "NumericalSgps" para el sistema GAP:\\
+	\begin{lstlisting}[language=gap]
+gap> s1 := NumericalSemigroup("generators",7,11,15);
+<Numerical semigroup with 3 generators>
+gap> SmallElementsOfNumericalSemigroup(s1);
+[ 0, 7, 11, 14, 15, 18, 21, 22, 25, 26, 28, 29, 30, 32, 33, 35, 36, 37, 39 ]
+	\end{lstlisting}
+\end{itemize}
+Este último semigrupo es el semigrupo generado por un subconjunto, Para semigrupos como este, usaeremos la notación: $\{3,6,7,9,10,12,\rightarrow \}$ para indicar que a partir de el último elemento antes de la flecha, todo los numéros naturales mayores que este están en el semigrupo.\\
+En general podemos definir el semigrupo generado por un subconjunto como:\\
+\\ \textbf{Defición 2:} Dado un semigrupo $S$ y $A\subset S$ podemos definimos el semigrupo generado por dicho subconjunto cómo $<A>=\{\lambda_{1}a_{1}+...+\lambda_{n}a_{n}\quad |\quad n\in\mathbb{N}, \lambda_{1},...,\lambda_{n}\in\mathbb{N}\quad and\quad a_{1},...,a_{n}\in A\}$. Dado $S'=<A>$, decimos que $A$ es un sistema de generadores de $S'$, y que es un sistema minimal si ningún subconjunto propio del mismo genera el semigrupo completo. \\
+\\ \textbf{Definición 3:} Dados dos semigrupos $X$, $Y$, un homomorfismo entre $X$ y $Y$ es una aplicación $f:X\rightarrow Y$ que verifica la siguiente propiedad:\\
+$$\quad f(a+b)=f(a)+f(b)\quad \forall a, b\in X$$ 
+Decimos que dicho homomorfismo es un isomorfismo si la aplicación es biyectiva, monomorfismo si es inyectiva y epimorfismo si es sobreyectiva.\\
+\\ \textbf{Definición 4:} Dado un semigrupo numérico $S$ y un elemento $n\in S\textbackslash\{0\}$, el conjunto de Apéry asociado a un subconjunto se define como:
+$$ Ap(S,n) = \{s\in S | s-n\notin S\} $$\\
+\textbf{Ejemplo: } Para el semigrupo anterior: $S:=<{3,7}>$, podemos calculrar el grupo de Apéry usando la definición:
+\begin{itemize}
+\item $Ap(S,3)=\{0,3,14\}$
+\item $Ap(S,7)=\{0,3,7,13,16,18,19\}$
+\end{itemize}
+\textbf{Lema 1: } Dado $S$ un semigrupo y denotanto $S^{*}=S\textbackslash \{0\}$, entonces $S^{*}\textbackslash (S^{*}+S^{*}) \;=\; \{s\in S^{*} \; |\; \nexists\; x,y\in S^{*} : s=x+y\}$ es un sistema de generadores de $S$. De echo, todo sistema de generadores contiene a este conjunto:\\
+\\ \textbf{Demostración:} Dado $s\in S^{*}$, si $s\notin S^{*}\textbackslash (S^{*}+S^{*})$ entonces $\exists \; x,y\in S^{*}$ tales que $x+y=s$. Iterando este razonamiento sobre $x$ e $y$ un número finito de veces obtedremos una descomposición $s=s_{1}+...+s_{n}$ donde $s_{i}\in S^{*},\; i\in \{1,...,n\}$. El proceso es finito, pues $x<s,\; y<s$. Esto demuestra que $S^{*}\textbackslash (S^{*}+S^{*})$ es un sistema de generadores.\\
+Dado, un sistema de geradores de $S$, si tomamos $x\notin S^{*}\textbackslash (S^{*}+S^{*})$, entonces existe $n\in \mathbb{N}\textbackslash, \lambda_{1},...,\lambda_{n}\in\mathbb{N}$ y $a_{1},...,a_{n}\in A$ tales que $x=\lambda_{1}a_{1}+...+\lambda_{n}a_{n}$. Como $x\notin (S^{*}+S^{*})$, entonces existe $i\in\{1,...,n\}\; |\; x=a_{i}$.\\
+\textbf{Lema 2: } Dado $n$ un elemento distinto de cero del semigrupo $S$, podemos caracterizar el conjunto de Apéry $Ap(S,n)$ como $\{0=w(0), w(1),...,w(n-1)\}$, donde $w(i) = min_{\alpha\in\mathbb{N}}\{\alpha = i\:(mod\: n)\}\quad \forall i\in\{0,1,...,n-1\}$. \\
+\\ \textbf{Demostración:} La demostración sigue del hecho que,  $\exists k\in \mathbb{N}$ tal que $k\cdot n + i \in S,\: \forall i\in \{0,1,...,n-1\}$ \\
+\\Del lemma anterior, tenemos que el cardianal de $Ap(S, n)$ es $n$
+\textbf{Lema 3: } Dado un semigrupo numérico $S$ y $n\in S$, tenemos que, para todo $s\in S$, existe un único par $(k,w)\in \mathbb{N}\times Ap(S,n)$ tal que:
+$$s=k\cdot n + w$$  
+\textbf{Teorema 4: } Todo semigrupo admite un sistema minimal de generadores. Dicho sistema minimal de generadores es finito. \\
+\textbf{Demostración: } 
+\\ \textbf{Definición 5:} Dado un semigrupo numérico $S$ con el siguiente sistema minimal de generadores: $\{n_{1}<n_{2}<...<n_{p}\}$, definimos:
+\begin{itemize}
+	\item $n_{1}$ como \textbf{multiplicidad de S}, que denotaremos por $m(S)$
+	\item $p$ como \textbf{dimensión embebida} del semigrupo $S$ (en Inglés, "\textit{embedding dimension}"). La denotaremos por $e(S)$
+\end{itemize}
+\textbf{Proposición 1:} Dado $S$ un semigrupo numérico, tenemos que:
+\begin{itemize}
+	\item $m(S) = min(S\textbackslash \{0\})$
+	\item $e(S)\leq m(S)$
+\end{itemize} 
+\textbf{Demostración:} La primera afirmación es simplemente la multiplicidad es el menor de los elementos de $S$, lo cual sigue del hecho que la multiplicidad es el menor de los generadores. \\
+La segunda afirmación viene del hecho de que $\{m(S)\}\cup Ap(S,m(S))\textbackslash\{0\}$ es un sistema de generadores de S:\\
+Para un $n S \textbackslash \{0\}$, tenemos que $A(S,n)$ tiene $n$ elemntos, luego si el conjunto $\{m(S)\}\cup Ap(S,m(S))\textbackslash\{0\}$ es un sistema de generadores y $e(S)$ lo hemos definido como el cardinal de un sistema de generadores minimal, $e(S)\leq | \{m(S)\}\cup Ap(S,m(S))\textbackslash\{0\}|\;=\;m(S)$ \\ 
+Ver que este conjunto es un sistema minimal de generadores viene porque: 
+\end{document}
