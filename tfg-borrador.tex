@@ -19,6 +19,8 @@
 \usepackage{listings}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
+\newcommand{\qed}{\begin{flushright} $\square$ \end{flushright}}
+
 \linespread{1.25}
 \author{Jorge Angulo}
 \title{TFG Borrador}
@@ -26,9 +28,9 @@
 \begin{document}
 \maketitle
 \chapter{Introducción a semigrupos numéricos}
-Los semigrupos, en particular los semigrupos numéricos son uno de los conceptos fundamenteales de este trabajo y por ello, en este capítulo realizaremos una introducción de algunos de los conceptos más báscicos sobre semigrupos.\\
 
-\textbf{Definición 1:} Un semigrupo es un par $(S, +)$, donde $S$ es un conjunto y $\textbf{+}$ es una operación binaria y asociativa en $S$.\\ Además, en este trabajo consideraremos que, simpre que no se especifique lo contrario, dicha operación es conmutativa. En general denotaremos por $S$ a los semigrupos conmutativos (omitiendo también la operación en la notación)\\
+Los semigrupos, en particular los semigrupos numéricos son uno de los conceptos fundamenteales de este trabajo y por ello, en este capítulo realizaremos una introducción de algunos de los conceptos más báscicos sobre semigrupos.\\
+\\ \textbf{Definición 1:} Un semigrupo es un par $(S, +)$, donde $S$ es un conjunto y $\textbf{+}$ es una operación binaria y asociativa en $S$.\\ Además, en este trabajo  consideraremos que, simpre que no se especifique lo contrario, dicha operación es conmutativa. En general denotaremos por $S$ a los semigrupos conmutativos (omitiendo también la operación en la notación)\\
 \\Este capítulo trata principalmente con los semigrupos numéricos. Es decir, semigrupos cuyos elementos son números naturales y donde la operación "$+$" es la suma habitual. \\ 
 \\ \textbf{Ejemplos:} 
 \begin{itemize}
@@ -42,7 +44,7 @@ gap> SmallElementsOfNumericalSemigroup(s1);
 [ 0, 7, 11, 14, 15, 18, 21, 22, 25, 26, 28, 29, 30, 32, 33, 35, 36, 37, 39 ]
 	\end{lstlisting}
 \end{itemize}
-Este último semigrupo es el semigrupo generado por un subconjunto, Para semigrupos como este, usaeremos la notación: $\{3,6,7,9,10,12,\rightarrow \}$ para indicar que a partir de el último elemento antes de la flecha, todo los numéros naturales mayores que este están en el semigrupo.\\
+El segundo ejemplo es el semigrupo generado por un subconjunto, Para semigrupos como este, usaremos la notación: $\{3,6,7,9,10,12,\rightarrow \}$ para indicar que a partir de el último elemento antes de la flecha, todo los numéros naturales mayores que este están en el semigrupo.\\
 En general podemos definir el semigrupo generado por un subconjunto como:\\
 \\ \textbf{Defición 2:} Dado un semigrupo $S$ y $A\subset S$ podemos definimos el semigrupo generado por dicho subconjunto cómo $<A>=\{\lambda_{1}a_{1}+...+\lambda_{n}a_{n}\quad |\quad n\in\mathbb{N}, \lambda_{1},...,\lambda_{n}\in\mathbb{N}\quad and\quad a_{1},...,a_{n}\in A\}$. Dado $S'=<A>$, decimos que $A$ es un sistema de generadores de $S'$, y que es un sistema minimal si ningún subconjunto propio del mismo genera el semigrupo completo. \\
 \\ \textbf{Definición 3:} Dados dos semigrupos $X$, $Y$, un homomorfismo entre $X$ y $Y$ es una aplicación $f:X\rightarrow Y$ que verifica la siguiente propiedad:\\
@@ -55,31 +57,36 @@ $$ Ap(S,n) = \{s\in S | s-n\notin S\} $$\\
 \item $Ap(S,3)=\{0,3,14\}$
 \item $Ap(S,7)=\{0,3,7,13,16,18,19\}$
 \end{itemize}
-\textbf{Lema 1: } Dado $S$ un semigrupo y denotanto $S^{*}=S\textbackslash \{0\}$, entonces $S^{*}\textbackslash (S^{*}+S^{*}) \;=\; \{s\in S^{*} \; |\; \nexists\; x,y\in S^{*} : s=x+y\}$ es un sistema de generadores de $S$. De echo, todo sistema de generadores contiene a este conjunto:\\
+\textbf{Lema 1: } Dado $S$ un semigrupo y denotanto $S^{*}=S\textbackslash \{0\}$, entonces $S^{*}\textbackslash (S^{*}+S^{*}) \;=\; \{s\in S^{*} \; |\; \nexists\; x,y\in S^{*} : s=x+y\}$ es un sistema de generadores de $S$. De echo, todo sistema de generadores contiene a este conjunto.\\
 \\ \textbf{Demostración:} Dado $s\in S^{*}$, si $s\notin S^{*}\textbackslash (S^{*}+S^{*})$ entonces $\exists \; x,y\in S^{*}$ tales que $x+y=s$. Iterando este razonamiento sobre $x$ e $y$ un número finito de veces obtedremos una descomposición $s=s_{1}+...+s_{n}$ donde $s_{i}\in S^{*},\; i\in \{1,...,n\}$. El proceso es finito, pues $x<s,\; y<s$. Esto demuestra que $S^{*}\textbackslash (S^{*}+S^{*})$ es un sistema de generadores.\\
-Dado, un sistema de geradores de $S$, si tomamos $x\notin S^{*}\textbackslash (S^{*}+S^{*})$, entonces existe $n\in \mathbb{N}\textbackslash\{0\}, \lambda_{1},...,\lambda_{n}\in\mathbb{N}$ y $a_{1},...,a_{n}\in A$ tales que $x=\lambda_{1}a_{1}+...+\lambda_{n}a_{n}$. Como $x\notin (S^{*}+S^{*})$, entonces existe $i\in\{1,...,n\}\; |\; x=a_{i}$.\\
-\\ \textbf{Lema 2: } Dado $n$ un elemento distinto de cero del semigrupo $S$, podemos caracterizar el conjunto de Apéry $Ap(S,n)$ como $\{0=w(0), w(1),...,w(n-1)\}$, donde $w(i) = min_{\alpha\in S}\{\alpha = i\:(mod\: n)\}\quad \forall i\in\{0,1,...,n-1\}$. \\
-\\ \textbf{Demostración:} La demostración sigue del hecho que,  $\exists k\in \mathbb{N}$ tal que $k\cdot n + i \in S,\: \forall i\in \{0,1,...,n-1\}$ \\
-\\Del lemma anterior, tenemos que el cardianal de $Ap(S, n)$ es $n$\\
+Dado, un sistema de geradores de $S$, si tomamos $x\notin S^{*}\textbackslash (S^{*}+S^{*})$, entonces existe $n\in \mathbb{N}\textbackslash\{0\}, \lambda_{1},...,\lambda_{n}\in\mathbb{N}$ y $a_{1},...,a_{n}\in A$ tales que $x=\lambda_{1}a_{1}+...+\lambda_{n}a_{n}$. Como $x\notin (S^{*}+S^{*})$, entonces existe $i\in\{1,...,n\}\; |\; x=a_{i}$.
+\qed
+\textbf{Lema 2:} Dado $n$ un elemento distinto de cero del semigrupo $S$, podemos caracterizar el conjunto de Apéry $Ap(S,n)$ como $\{0=w(0), w(1),...,w(n-1)\}$, donde $w(i) = min_{\alpha\in S}\{\alpha = i\:(mod\: n)\}\quad \forall i\in\{0,1,...,n-1\}$. \\
+\textbf{Demostración:} La demostración sigue del hecho que,  $\exists k\in \mathbb{N}$ tal que $k\cdot n + i \in S,\: \forall i\in \{0,1,...,n-1\}$ 
+\qed
+Del lemma anterior, tenemos que el cardianal de $Ap(S, n)$ es $n$\\
 \textbf{Lema 3:} Dado un semigrupo numérico $S$ y $n\in S$, tenemos que, para todo $s\in S$, existe un único par $(k,w)\in \mathbb{N}\times Ap(S,n)$ tal que:
 $$s=k\cdot n + w$$ 
-\textbf{Demostración:} La demostración sigue del lema anterior:\\ $s = i (mod\; n)$ para cierto $i\in \{0,1,...,n-1\}$, luego $s=w(i)+k\cdot n$ para un cierto $k\in \mathbb{N}$ y donde $w(i)$ es como en el lema anterior. \\
-\\ En particular, este lema dice que: $<Ap(S,n)\cup\{n\}>=S$\\
+\textbf{Demostración:} La demostración sigue del lema anterior:\\ $s = i (mod\; n)$ para cierto $i\in \{0,1,...,n-1\}$, luego $s=w(i)+k\cdot n$ para un cierto $k\in \mathbb{N}$ y donde $w(i)$ es como en el lema anterior.
+\qed
+En particular, este lema dice que: $<Ap(S,n)\cup\{n\}>=S$\\
 \\ \textbf{Teorema 4: } Todo semigrupo admite un sistema minimal de generadores. Dicho sistema minimal de generadores es finito. \\
-\textbf{Demostración: } Sigue de los lemas 1 y 3. El lema 1 nos dice que $S^{*}\textbackslash (S^{*}+S^{*})$ es un sistema minimal de generadores y el lema 3 que  $\forall n\in S^{*},\; S=<Ap(S,n)\cup\{n\}>$. Dado que  $<Ap(S,n)\cup\{n\}>$ es finito, $S^{*}\textbackslash (S^{*}+S^{*})$ también lo es. \\
-\\ \textbf{Definición 5:} Dado un semigrupo numérico $S$ con el siguiente sistema minimal de generadores: $\{n_{1}<n_{2}<...<n_{p}\}$, definimos:
+\textbf{Demostración: } Sigue de los lemas 1 y 3. El lema 1 nos dice que $S^{*}\textbackslash (S^{*}+S^{*})$ es un sistema minimal de generadores y el lema 3 que  $\forall n\in S^{*},\; S=<Ap(S,n)\cup\{n\}>$. Dado que  $<Ap(S,n)\cup\{n\}>$ es finito, $S^{*}\textbackslash (S^{*}+S^{*})$ también lo es.
+\qed
+\textbf{Definición 5:} Dado un semigrupo numérico $S$ con el siguiente sistema minimal de generadores: $\{n_{1}<n_{2}<...<n_{p}\}$, definimos:
 \begin{itemize}
-	\item $n_{1}$ como \textbf{multiplicidad de S}, que denotaremos por $m(S)$
-	\item $p$ como \textbf{dimensión embebida} del semigrupo $S$ (en Inglés, "\textit{embedding dimension}"). La denotaremos por $e(S)$
+	\item $n_{1}$ como \textbf{multiplicidad de S}, que denotaremos por $\mathbf{m(S)}$
+	\item $p$ como \textbf{dimensión embebida} del semigrupo $S$ (en Inglés, "\textit{embedding dimension}"). La denotaremos por $\mathbf{e(S)}$
 \end{itemize}
 \textbf{Proposición 1:} Dado $S$ un semigrupo numérico, tenemos que:
 \begin{itemize}
 	\item $m(S) = min(S\textbackslash \{0\})$
 	\item $e(S)\leq m(S)$
 \end{itemize} 
-\textbf{Demostración:} La primera afirmación es simplemente la multiplicidad es el menor de los elementos de $S$, lo cual sigue del hecho que la multiplicidad es el menor de los generadores. \\
-La segunda afirmación viene del hecho de que $\{m(S)\}\cup Ap(S,m(S))\textbackslash\{0\}$ es un sistema de generadores de S (dado por lema 3) y de cardinal m(S) (lema 2). Todo sistema minimal de generadores deberá, por tanto tener como mucho $m(s)$ elementos.\\
-\\ \textbf{Definición:} Dado un semigrupo numérico $S$, llamos al mayor entero que no está en $S$ \textit{Número de Fröbenius} de $S$ y se denota por $F(S)$. \\
+\textbf{Demostración:} Por definición la multiplicidad es el menor de os generadores. Dicho elemnto es el menor de los elementos distintos de $0$ del semigrupo, pues no se puede poner como suma de otros dos \\
+La segunda afirmación viene del hecho de que $\{m(S)\}\cup Ap(S,m(S))\textbackslash\{0\}$ es un sistema de generadores de S (dado por lema 3) y cuyo cardinal es m(S) (lema 2). Todo sistema minimal de generadores deberá, por tanto tener como mucho $m(s)$ elementos.
+\qed
+\textbf{Definición:} Dado un semigrupo numérico $S$, llamos al mayor entero que no está en $S$ \textit{Número de Fröbenius} de $S$ y se denota por $F(S)$. \\
 \\ \textbf{Definición:} Los huecos de $S$ (gaps en ingés) son el conjunto $G(S)=\mathbb{N}\textbackslash S$. La cardinalidad de dicho conjunto se llama \textit{genus} o \textit{grado de singularidad} de $S$ y se denota por $g(S)$.\\
 \\ \textbf{Ejemploss: } Podemos calcualr los huecos, el grado de singularidad y el número de Föbenius usando GAP:
 \begin{lstlisting}[language=gap]
@@ -100,9 +107,10 @@ Aunque en general no se puede dar una formula para calcular el conjunto de hueco
 \end{itemize}
 \textbf{Demostración:}\\
 Queremos ver que si $x>(max\;Ap(S,n))-n$, $x\in S$. Por definición de $Ap(S,n)$, $(max\;Ap(S,n))-n \notin S$. Dado $x>(max\;Ap(S,n))-n\Rightarrow x+n>(max\;Ap(S,n))$. Por el lema 2, existe $w\in Ap(S,n)$ tal que es congruente con $x$ modulo $n$. Como $w<x+n$, exite un entero positivo $k$ tal que $w+n\cdot k\;=\; x+n $ y por tanto $x-n=w+(k-1)\cdot n$ pertenece a $S$\\
-Para la segunda afirmación, nos basamos en el lema 2 y la notación asllí usada. Sabemos que para cada $w\in Ap(S,n)$ congruente con $i$ modulo $n$, con $i\in\{0,1,...,n-1\},\;\exists k_{i}\in\mathbb{N}$ tal que $w=k_{i}\cdot n + i$. Es decir, que: 
+Para la segunda afirmación, nos basamos en el lema 2 y la notación allí usada. Sabemos que para cada $w\in Ap(S,n)$ congruente con $i$ modulo $n$, con $i\in\{0,1,...,n-1\},\;\exists k_{i}\in\mathbb{N}$ tal que $w=k_{i}\cdot n + i$. Es decir, que: 
 $$Ap(S,n)=\{w(0)=0, w(1)=k_{1}\cdot n + 1,...,w(i)=k_{i}\cdot n +i,...,w(n-1)=k_{n-1}\cdot n+n-1\}$$
 Cualquier entero $x$ congruente con $w(i)$ modulo $n$ pertenece a $S$ si y solo si $w(i)\leq x$. En otras palabras hay $k_{i}$ enteros no negativos congruentes con $i$ modulo $n$ que no están en el semigrupo. Por tanto:
 $$ g(S) = k_{1}+...+k_{n-1} = \frac{1}{n}\sum_{i=1}^{n-1}(n\cdot k_{i}+i) -\frac{n-1}{2} = \frac{1}{n}\sum_{w\in Ap(S,n)}(w) -\frac{n-1}{2}$$
-\textbf{Definición:} 
+\qed
+
 \end{document}
